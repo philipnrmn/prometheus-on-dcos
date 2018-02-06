@@ -8,9 +8,9 @@ sed -i '$ d' /tmp/prometheus.yml
 # Filter state-summary to extract all the agents, mix in the leader,
 # output result to temp file
 wget -qO- http://leader.mesos:5050/state-summary \
-  | rq -jJ "at slaves | spread | at hostname | map (ip) => { ip + ':8088' } | collect" \
+  | rq -jJ "at slaves | spread | at hostname | map (ip) => { ip + ':9273' } | collect" \
   | sed "s/\s//g" \
-  | sed "s/\[/[\"leader.mesos:8088\",/" \
+  | sed "s/\[/[\"leader.mesos:9273\",/" \
   > /tmp/nodes
 
 # Read nodes into memory

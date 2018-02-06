@@ -29,4 +29,4 @@ scrape_configs:
   - job_name: 'dcos'
 
     static_configs:
-      - targets: ['leader.mesos:8088']
+      - targets: ['leader.mesos:9273']

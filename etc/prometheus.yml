@@ -4,29 +4,17 @@ global:
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
   # scrape_timeout is set to the global default (10s).
 
-  # Attach these labels to any time series or alerts when communicating with
-  # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-      monitor: 'codelab-monitor'
-
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
-  # - "first.rules"
-  # - "second.rules"
-
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
+  - job_name: 'dcos-metrics'
 
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
+    # All master nodes are available at master.mesos via their A record
+    dns_sd_configs:
+      - names: ['master.mesos']
+        type: 'A'
+        port: 61091
 
-    static_configs:
-      - targets: ['localhost:9090']
-
-  - job_name: 'dcos'
-
-    static_configs:
-      - targets: ['leader.mesos:61091']
+    # All agent nodes are written regularly to /tmp/agents.json
+    file_sd_configs:
+      - files: ['/tmp/agents.json']

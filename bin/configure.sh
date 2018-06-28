@@ -6,7 +6,8 @@ while [ 1 ]
 do
   wget -qO- http://leader.mesos:5050/state-summary \
     | rq -jJ "at slaves | spread | at hostname | map (ip) => { ip + ':61091' } | collect | map (n)=>{ {'targets':n} } | collect" \
-    > /tmp/agents.json
-
+    > /tmp/agents.json.new
+  mv /tmp/agents.json.new /tmp/agents.json
+  
   sleep 60
 done

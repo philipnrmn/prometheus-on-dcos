@@ -1,5 +1,7 @@
 # Prometheus on DC/OS
 
+## Great news! The Prometheus framework for DC/OS is available in the catalogue. You shouldn't use this any more!
+
 This repository is the home of the [Prometheus on DC/OS][1] Docker image. 
 
 This image builds on the official Prometheus image ([prom/prometheus][2]). It uses [rq](https://github.com/dflemstr/rq)
